@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 
 @Service
 public class UserServiceImpl implements UsersService {
@@ -21,6 +23,7 @@ public class UserServiceImpl implements UsersService {
     public UserDto createUser(UserDto userDto) {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        userDto.setUUID(userDto.getUUID() == null ? UUID.randomUUID().toString() : userDto.getUUID());
         User user = modelMapper.map(userDto, User.class);
         user.setEncryptedPassword("encrypted_password"); // TODO: Use hashing algorithm
 

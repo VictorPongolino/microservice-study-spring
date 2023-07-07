@@ -1,20 +1,22 @@
 package br.com.pongolino.study.ApiUsers.api.services.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 @Getter
-@RequiredArgsConstructor
+@Setter
+@AllArgsConstructor
 public class UserDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 3413159716887010646L;
 
-    private final Long id;
-    private final String fullName;
-    private final String email;
-    private final String UUID;
-    private final String encryptedPassword;
+    private Long id;
+    private String fullName;
+    private String email;
+    private String UUID;
+    private String encryptedPassword;
 }
