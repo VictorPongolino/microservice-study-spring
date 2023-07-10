@@ -5,6 +5,8 @@ import br.com.pongolino.study.ApiUsers.api.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -37,12 +39,17 @@ public class WebSecurity {
 
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        AuthenticationManagerBuilder authBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
+        authBuilder.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
+        final AuthenticationManager authManager = authBuilder.build();
+
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.authorizeHttpRequests(requests -> {
-           requests.requestMatchers("/users/*").permitAll();
-           requests.requestMatchers("/h2-console/*").permitAll();
+            requests.requestMatchers("/users/*").permitAll();
+            requests.requestMatchers("/h2-console/*").permitAll();
         });
+
 
         return httpSecurity.build();
     }
