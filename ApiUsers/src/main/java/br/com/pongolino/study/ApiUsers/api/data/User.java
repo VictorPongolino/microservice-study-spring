@@ -1,10 +1,8 @@
 package br.com.pongolino.study.ApiUsers.api.data;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.io.Serial;
 import java.io.Serializable;
 

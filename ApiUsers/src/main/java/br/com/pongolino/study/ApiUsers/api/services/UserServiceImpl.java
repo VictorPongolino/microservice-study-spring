@@ -2,6 +2,7 @@ package br.com.pongolino.study.ApiUsers.api.services;
 
 import br.com.pongolino.study.ApiUsers.api.data.User;
 import br.com.pongolino.study.ApiUsers.api.data.UserRepository;
+import br.com.pongolino.study.ApiUsers.api.presentation.model.UserCreationResponse;
 import br.com.pongolino.study.ApiUsers.api.services.model.UserDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -20,15 +21,13 @@ public class UserServiceImpl implements UsersService {
 
     @Override
     @Transactional(readOnly = false)
-    public UserDto createUser(UserDto userDto) {
+    public UserCreationResponse createUser(UserDto userDto) {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         userDto.setUUID(userDto.getUUID() == null ? UUID.randomUUID().toString() : userDto.getUUID());
         User user = modelMapper.map(userDto, User.class);
         user.setEncryptedPassword("encrypted_password"); // TODO: Use hashing algorithm
 
-        userRepository.save(user);
-
-        return userDto;
+        return modelMapper.map(userRepository.save(user), UserCreationResponse.class);
     }
 }
