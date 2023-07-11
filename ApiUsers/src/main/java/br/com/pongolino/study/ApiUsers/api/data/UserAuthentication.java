@@ -1,5 +1,6 @@
 package br.com.pongolino.study.ApiUsers.api.data;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @RequiredArgsConstructor
+@Getter
 public class UserAuthentication implements UserDetails {
 
     private final User user;

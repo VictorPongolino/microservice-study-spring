@@ -2,7 +2,7 @@ package br.com.pongolino.study.ApiUsers.api.presentation.controllers;
 
 import br.com.pongolino.study.ApiUsers.api.presentation.model.UserCreationRequest;
 import br.com.pongolino.study.ApiUsers.api.presentation.model.UserCreationResponse;
-import br.com.pongolino.study.ApiUsers.api.services.UsersService;
+import br.com.pongolino.study.ApiUsers.api.services.UserService;
 import br.com.pongolino.study.ApiUsers.api.services.model.UserDto;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class UsersController {
 
     @Autowired
-    private UsersService usersService;
+    private UserService userService;
 
     @GetMapping("/status/check")
     public String health() {
@@ -28,7 +28,7 @@ public class UsersController {
     public ResponseEntity<UserCreationResponse> createUser(@RequestBody @Valid UserCreationRequest userCreationRequest) {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        UserCreationResponse createdUser = usersService.createUser(modelMapper.map(userCreationRequest, UserDto.class));
+        UserCreationResponse createdUser = userService.createUser(modelMapper.map(userCreationRequest, UserDto.class));
 
         return ResponseEntity.status(HttpStatusCode.valueOf(204)).body(createdUser);
     }
