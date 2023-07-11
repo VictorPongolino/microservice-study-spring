@@ -44,6 +44,7 @@ public class WebSecurity {
         final AuthenticationManager authManager = authBuilder.build();
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        httpSecurity.addFilter(new AuthAttemptFilter(authManager));
         httpSecurity.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.authorizeHttpRequests(requests -> {
             requests.requestMatchers("/users/*").permitAll();
