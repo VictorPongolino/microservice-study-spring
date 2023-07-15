@@ -7,6 +7,14 @@ spring.devtools.restart.exclude=static/**,public/**,templates/**
 eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
 eureka.instance.instance-id=${spring.application.name}:${spring.application.instance_id:${random.value}}
 
+spring.datasource.url=jdbc:h2:mem:users_db
+spring.datasource.username=root
+spring.datasource.password=
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+spring.h2.console.enabled=true
+spring.h2.console.settings.web-allow-others=true
+spring.jpa.defer-datasource-initialization=true
 
 jwt.token=
 jwt.expiration_ms=
