@@ -40,7 +40,7 @@ public class WebSecurity {
         httpSecurity.authenticationManager(authManager);
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
 
-        AuthAttemptFilter authAttemptFilter = new AuthAttemptFilter(authManager, userService, environment);
+        AuthAttemptFilter authAttemptFilter = new AuthAttemptFilter(authManager, environment);
         authAttemptFilter.setFilterProcessesUrl(Objects.requireNonNull(environment.getProperty("login.url")));
         httpSecurity.addFilter(authAttemptFilter);
 
