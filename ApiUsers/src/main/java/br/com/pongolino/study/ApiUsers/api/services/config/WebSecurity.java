@@ -15,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.Objects;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurity {
@@ -37,11 +39,15 @@ public class WebSecurity {
 
         httpSecurity.authenticationManager(authManager);
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
-        httpSecurity.addFilter(new AuthAttemptFilter(authManager, userService, environment));
+
+        AuthAttemptFilter authAttemptFilter = new AuthAttemptFilter(authManager, userService, environment);
+        authAttemptFilter.setFilterProcessesUrl(Objects.requireNonNull(environment.getProperty("login.url")));
+        httpSecurity.addFilter(authAttemptFilter);
+
         httpSecurity.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.authorizeHttpRequests(requests -> {
-            requests.requestMatchers("/users/*").permitAll();
-            requests.requestMatchers("/h2-console/*").permitAll();
+            requests.requestMatchers("/users/**").permitAll();
+            requests.requestMatchers("/h2-console/**").permitAll();
         });
 
 
