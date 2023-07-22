@@ -17,6 +17,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Objects;
 
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurity {
@@ -47,7 +49,7 @@ public class WebSecurity {
         httpSecurity.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.authorizeHttpRequests(requests -> {
             requests.requestMatchers("/users/**").permitAll();
-            requests.requestMatchers("/h2-console/**").permitAll();
+            requests.requestMatchers(toH2Console()).permitAll();
         });
 
 
