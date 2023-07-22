@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -12,6 +13,8 @@ import java.util.Collections;
 @Getter
 public class UserAuthentication implements UserDetails {
 
+    @Serial
+    private static final long serialVersionUID = -8816497298566942950L;
     private final User user;
 
     @Override
@@ -31,21 +34,21 @@ public class UserAuthentication implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
