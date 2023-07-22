@@ -23,6 +23,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Objects;
@@ -41,17 +42,12 @@ public class AuthAttemptFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        LoginModel loginModel;
         try {
-            loginModel = objectMapper.readValue(request.getInputStream(), LoginModel.class);
+            LoginModel loginModel = new ObjectMapper().readValue(request.getInputStream(), LoginModel.class);
+            return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(loginModel.email, loginModel.password, new ArrayList<>()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginModel.email, loginModel.password);
-        setDetails(request, token);
-        return getAuthenticationManager().authenticate(token);
     }
 
     @Override

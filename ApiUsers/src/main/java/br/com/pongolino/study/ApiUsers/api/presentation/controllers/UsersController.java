@@ -33,7 +33,7 @@ public class UsersController {
                 .addMappings(mapper -> mapper.map(UserCreationRequest::getPassword, UserDto::setRawPassword));
         UserCreationResponse createdUser = userService.createUser(userDtoMapper.map(userCreationRequest));
 
-        return ResponseEntity.status(HttpStatusCode.valueOf(204)).body(createdUser);
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(createdUser);
     }
 }
 

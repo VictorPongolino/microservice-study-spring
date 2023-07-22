@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
         userDto.setUUID(userDto.getUUID() == null ? UUID.randomUUID().toString() : userDto.getUUID());
         User user = modelMapper.map(userDto, User.class);
         user.setEncryptedPassword(passwordEncoder.encode(userDto.getRawPassword()));
-
-        return modelMapper.map(userRepository.save(user), UserCreationResponse.class);
+        User persistenceUser = userRepository.save(user);
+        return modelMapper.map(persistenceUser, UserCreationResponse.class);
     }
 
     public Optional<UserDto> findByEmail(String email) {
