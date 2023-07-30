@@ -35,3 +35,4 @@ build/
 src/main/resources/*.properties
 src/main/resources/*.yml
 src/main/resources/*.yaml
+/src/main/resources/key/*.jks

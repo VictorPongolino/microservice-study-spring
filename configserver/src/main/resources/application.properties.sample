@@ -1,2 +1,6 @@
 spring.application.name=config-server
 server.port=8012
+
+encrypt.keystore.location=classpath:key/secret.jks
+encrypt.keystore.password=
+encrypt.keystore.alias=secret
